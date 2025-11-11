@@ -1,0 +1,127 @@
+{
+  "events": [
+    {
+      "name": "Conference on Digital Humanities 2024",
+      "id": "evt_001",
+      "time": {
+        "notBefore": "2024-03-15",
+        "notAfter": "2024-03-17"
+      },
+      "places": ["Vienna", "Austria"],
+      "persons": [
+        {
+          "name": "Alice Smith",
+          "role": "keynote speaker",
+          "affiliation": "University of Vienna",
+          "gnd": "https://d-nb.info/gnd/123456789"
+        },
+        {
+          "name": "Bob Jones",
+          "role": "panelist",
+          "affiliation": "Austrian Academy of Sciences",
+          "gnd": "https://d-nb.info/gnd/987654321"
+        }
+      ],
+      "organizations": [
+        {
+          "name": "University of Vienna",
+          "type": "university",
+          "location": "Vienna",
+          "viaf": "https://viaf.org/viaf/147978598"
+        },
+        {
+          "name": "Austrian Academy of Sciences",
+          "type": "research institution",
+          "location": "Vienna",
+          "viaf": "https://viaf.org/viaf/145428388"
+        }
+      ],
+      "metadata": {
+        "certainty": "high",
+        "notes": "Mentioned in document TEI_001.xml"
+      }
+    },
+    {
+      "name": "Workshop on Network Analysis",
+      "id": "evt_002",
+      "time": {
+        "notBefore": "2024-06-10",
+        "notAfter": "2024-06-10"
+      },
+      "places": ["Online"],
+      "persons": [
+        {
+          "name": "Alice Smith",
+          "role": "organizer",
+          "affiliation": "University of Vienna",
+          "gnd": "https://d-nb.info/gnd/123456789"
+        },
+        {
+          "name": "Carol Williams",
+          "role": "presenter",
+          "affiliation": "TU Wien",
+          "gnd": "https://d-nb.info/gnd/111222333"
+        },
+        {
+          "name": "David Brown",
+          "role": "attendee",
+          "affiliation": "Humboldt University",
+          "gnd": "https://d-nb.info/gnd/444555666"
+        }
+      ],
+      "organizations": [
+        {
+          "name": "University of Vienna",
+          "type": "university",
+          "location": "Vienna",
+          "viaf": "https://viaf.org/viaf/147978598"
+        }
+      ],
+      "metadata": {
+        "certainty": "medium",
+        "notes": "Mentioned in document TEI_045.xml"
+      }
+    },
+    {
+      "name": "TEI Encoding Seminar",
+      "id": "evt_003",
+      "time": {
+        "notBefore": "2024-09-05",
+        "notAfter": "2024-09-06"
+      },
+      "places": ["Berlin", "Germany"],
+      "persons": [
+        {
+          "name": "Carol Williams",
+          "role": "instructor",
+          "affiliation": "TU Wien",
+          "gnd": "https://d-nb.info/gnd/111222333"
+        },
+        {
+          "name": "Emma Davis",
+          "role": "assistant instructor",
+          "affiliation": "Berlin-Brandenburg Academy",
+          "gnd": "https://d-nb.info/gnd/777888999"
+        }
+      ],
+      "organizations": [
+        {
+          "name": "Berlin-Brandenburg Academy",
+          "type": "research institution",
+          "location": "Berlin",
+          "viaf": "https://viaf.org/viaf/123456789"
+        },
+        {
+          "name": "Austrian Academy of Sciences",
+          "type": "research institution",
+          "location": "Vienna",
+          "viaf": "https://viaf.org/viaf/145428388"
+        }
+      ],
+      "metadata": {
+        "certainty": "high",
+        "notes": "Mentioned in documents TEI_023.xml, TEI_089.xml"
+      }
+    }
+  ]
+}
