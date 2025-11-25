@@ -10,7 +10,7 @@ affiliation relationships.
 
 __version__ = "0.1.0"
 __author__ = "Timo Frühwirth"
-__license__ = "GPL-3.0-or-later"
+__license__ = "MIT"
 
 from .core import build
 
