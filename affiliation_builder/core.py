@@ -393,6 +393,7 @@ def build(
                     entity_id = entity[node_set_1_identifier_key]  # Get node ID
                     
                     entity_attrs = entity.copy()  # Copy attributes
+                    entity_attrs.pop(node_set_1_identifier_key, None)  # Remove identifier key to avoid redundancy
 
                 else:
                     
