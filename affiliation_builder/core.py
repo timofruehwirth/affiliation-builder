@@ -14,7 +14,7 @@ import networkx as nx  # Import NetworkX package for network creation
 # Configure logging
 
 logging.basicConfig(
-    level=logging.DEBUG,  # Set minimum severity level
+    level=logging.INFO,  # Set minimum severity level
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'  # Format log message
 )
 
@@ -180,10 +180,10 @@ def build(
         # Load and parse JSON from URL
 
         try:
-            response = requests.get(json_path, timeout=30)  # Send request to server; set timeout to 30 seconds; return Response object
-            response.raise_for_status()  # Raise exception for HTTP status code 4xx or 5xx
-            data = response.json()  # Decode Response object as UTF-8 text; parse as JSON into Python list or dictionary
-            logger.info(f"JSON successfully downloaded") # Log successful download
+            with requests.get(json_path, timeout=30) as response:  # Send request to server; set timeout to 30 seconds; return Response object
+                response.raise_for_status()  # Raise exception for HTTP status code 4xx or 5xx
+                data = response.json()  # Decode Response object as UTF-8 text; parse as JSON into Python list or dictionary
+                logger.info(f"JSON successfully downloaded")  # Log successful download
                         
         except requests.exceptions.Timeout:  # Catch timeout exception
             logger.error(f"Request timed out")  # Log timeout error
