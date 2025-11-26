@@ -24,6 +24,7 @@ While designed with event-participant data in mind, the package works with any c
 
 ## Requirements
 
+The package has been developed and tested with:
 - Python 3.9+
 - NetworkX 3.0+
 - Requests 2.31.0+
@@ -63,7 +64,7 @@ The `build()` function has 5 parameters that control how your JSON data maps to 
 
 ### Parameter 1: `json_path` (str or Path)
 
-**What it is:** Path to your local JSON file or HTTP(S) URL
+**What it is:** Path to your local JSON file or URL
 
 **Examples:**
 
@@ -269,3 +270,130 @@ G = build(
 )
 ```
 
+## Working with the Output
+
+The `build()` function returns a standard NetworkX Graph object with bipartite structure for further processing:
+
+```python
+import networkx as nx
+from affiliation_builder import build
+
+# Build network
+G = build('events.json', 'events', 'participants', 'event_id')
+
+# Access node sets
+events = {n for n, d in G.nodes(data=True) if d['bipartite'] == 0}
+participants = {n for n, d in G.nodes(data=True) if d['bipartite'] == 1}
+
+# Check bipartite validity
+print(nx.is_bipartite(G))
+
+# Analyze the network
+print(f"Number of events: {len(events)}")
+print(f"Number of participants: {len(participants)}")
+print(f"Network density: {nx.density(G)}")
+
+# Project to unipartite network
+P = nx.bipartite.weighted_projected_graph(G, participants)
+print(f"Co-affiliation edges: {P.number_of_edges()}")
+```
+
+## Duplicate Entity Node Handling
+
+When the same entity appears multiple times (such as a participant in several events), the node is created once and edges are added for each affiliation. This is the expected behavior for affiliation networks.
+
+However, if the same entity appears with different attributes in different items, the last set of attributes overwrites earlier sets. For example:
+```json
+{
+  "events": [
+    {
+      "name": "Event 1",
+      "participants": [{"name": "Alice", "role": "speaker"}]
+    },
+    {
+      "name": "Event 2",
+      "participants": [{"name": "Alice", "role": "attendee"}]
+    }
+  ]
+}
+```
+
+After processing, `G.nodes['Alice']` will have `role: 'attendee'` (from Event 2), but not `role: 'speaker'` (from Event 1).
+
+## Limitations
+
+- **UTF-8 encoding:** Local JSON files must be UTF-8 encoded. Other encodings will raise an error. (URL sources handle encoding automatically based on server response headers.)
+- **Hashable identifiers:** Node IDs must be hashable Python types (strings, numbers, tuples). Lists or dictionaries as identifiers will be skipped with a warning.
+- **Flat entity lists:** Entity values (under `node_set_1_keys`) must be arrays. Nested structures are not recursively processed.
+
+## Security Considerations
+
+Be aware of potential security risks when processing JSON data from untrusted sources:
+
+### Resource Exhaustion
+
+- **Large files:** No size limits are enforced on JSON files or URL downloads
+- **Deep nesting:** Extremely nested JSON structures could cause memory or stack issues
+- **Malicious data:** An attacker could provide data designed to consume excessive resources
+
+### Recommendations
+
+1. **Trust your sources:** Only load JSON from sources you control or trust
+2. **Validate externally:** Pre-validate JSON files for size and structure if loading from untrusted sources
+3. **Monitor resources:** For production use, implement resource monitoring
+4. **Sandbox if needed:** Run in isolated environments if processing untrusted data
+
+### Future Considerations
+Future versions may include:
+- Optional `max_size` parameter for downloads
+- Configurable nesting depth limits
+- Enhanced validation options
+
+**For now:** Use this package with data from trusted sources, or implement your own validation layer for untrusted input.
+
+
+## Logging
+
+The package uses Python's `logging` module. By default, log messages are not displayed. To receive processing information, configure logging in your application:
+
+Display full logging from DEBUG level upward:
+```python
+import logging
+from affiliation_builder import build
+
+logging.getLogger('affiliation_builder').setLevel(logging.DEBUG)
+logging.getLogger('affiliation_builder').addHandler(logging.StreamHandler())
+```
+
+Or set the level of logging to `logging.INFO` for logging only from INFO level upward.
+
+## Examples
+
+See the [`examples/`](https://github.com/timofruehwirth/affiliation-builder/tree/main/examples) directory for:
+- `example.json` - Sample JSON data structure
+- `example.ipynb` - Complete Jupyter Notebook with test analysis and visualization
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests on [GitHub](https://github.com/timofruehwirth/affiliation-builder).
+
+## License
+
+This project is licensed under the MIT License - see this [LICENSE](LICENSE) for details.
+
+## Citation
+
+If you use this software in your research, please cite:
+```bibtex
+@software{fruehwirth2025affiliation,
+  author = {Frühwirth, Timo},
+  title = {Affiliation Builder: Build bipartite affiliation networks from JSON data},
+  year = {2025},
+  url = {https://github.com/timofruehwirth/affiliation-builder},
+  version = {0.1.0}
+}
+```
+
+## Acknowledgments
+
+Built with [NetworkX](https://networkx.org/) for network analysis and [Requests](https://requests.readthedocs.io/) for HTTP functionality.
