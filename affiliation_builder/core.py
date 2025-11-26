@@ -13,12 +13,8 @@ import networkx as nx  # Import NetworkX package for network creation
 
 # Configure logging
 
-logging.basicConfig(
-    level=logging.INFO,  # Set minimum severity level
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'  # Format log message
-)
-
-logger = logging.getLogger('affiliation_builder')  # Create package logger instance
+logger = logging.getLogger('affiliation_builder')  # Create named logger
+logger.addHandler(logging.NullHandler())  # Attach idle handler - no logging by default
 
 # Define build() function
 
@@ -63,22 +59,38 @@ def build(
         
     Examples
     --------
-    >>> # Simple entities (strings)
-    >>> G = build('events.json', 'events', 'participants', 'name')
-    
-    >>> # Complex entities (objects with metadata)
-    >>> G = build(json_path='events.json',
-    ...           node_set_0_key='events',
-    ...           node_set_1_keys='participants',
-    ...           identifier_key='name',
-    ...           node_set_1_identifier_key='person_name')
-    
-    >>> # Direct array format
-    >>> G = build('events.json', None, 'members', 'id')
-    
-    >>> # Multiple entity types with complex objects
-    >>> G = build('events.json', 'events', ['persons', 'organizations'], 'name',
-    ...           node_set_1_identifier_key='name')
+    Build a network from JSON data with persons as entities:
+
+    >>> URL = 'https://raw.githubusercontent.com/timofruehwirth/affiliation-builder/main/examples/example.json'
+    >>> G = build(URL, 'events', 'persons', 'name', 'name')
+    >>> G.number_of_nodes()
+    14
+    >>> G.number_of_edges()
+    22
+
+    Access node sets:
+
+    >>> events = {n for n, d in G.nodes(data=True) if d['bipartite'] == 0}
+    >>> persons = {n for n, d in G.nodes(data=True) if d['bipartite'] == 1}
+    >>> len(events)
+    8
+    >>> len(persons)
+    6
+    >>> 'Alice Smith' in persons
+    True
+
+    Node attributes are preserved:
+
+    >>> G.nodes['Alice Smith']['affiliation']
+    'University of Vienna'
+
+    Build a network with multiple entity types (persons and organizations):
+
+    >>> G = build(URL, 'events', ['persons', 'organizations'], 'name', 'name')
+    >>> G.number_of_nodes()
+    20
+    >>> G.number_of_edges()
+    35
     
     Notes
     -----
@@ -347,6 +359,8 @@ def build(
         item_attrs = item.copy()
         for key in node_set_1_keys:
             item_attrs.pop(key, None)
+        
+        item_attrs.pop(identifier_key, None)  # Remove identifier key to avoid redundancy
 
         # Add node-set-0 nodes to graph from IDs
         G.add_node(node_id, bipartite=0, **item_attrs)  # Add node with (non-entity-related) attributes
