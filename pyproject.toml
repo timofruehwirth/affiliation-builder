@@ -12,7 +12,7 @@ description = "Build bipartite networks from JSON affiliation data"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -43,4 +43,6 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/timofruehwirth/affiliation-builder"
+Repository = "https://github.com/timofruehwirth/affiliation-builder"
 Issues = "https://github.com/timofruehwirth/affiliation-builder/issues"
+Documentation = "https://github.com/timofruehwirth/affiliation-builder#readme"
