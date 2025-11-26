@@ -1,3 +1,5 @@
+Affiliation Builder is currently in alpha and welcomes feedback from early adopters.
+
 # Affiliation Builder
 
 Build bipartite affiliation networks from JSON data using NetworkX.
