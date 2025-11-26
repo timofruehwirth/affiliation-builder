@@ -4,7 +4,7 @@ Affiliation Builder is currently in alpha and welcomes feedback from early adopt
 
 Build bipartite affiliation networks from JSON data using NetworkX.
 
-[![PyPI version](https://badge.fury.io/py/affiliation-builder.svg)](https://pypi.org/project/affiliation-builder/)
+[![PyPI version](https://img.shields.io/pypi/v/affiliation-builder)](https://pypi.org/project/affiliation-builder/)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
