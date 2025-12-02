@@ -374,10 +374,14 @@ def build(
 
             entities = item[key]  # Get entity list
             
-            # Check if value is list
-            if not isinstance(entities, list):
+            # Normalize un-listed entity to list
+            if isinstance(entities, dict):
+                entities = [entities]
+                logger.debug(f"Single entity in '{key}' for item '{node_id}' normalized to list")
+            elif not isinstance(entities, list):
                 logger.warning(
-                    f"Value for '{key}' in item '{node_id}' not a list, but {type(entities).__name__}, skipping"
+                    f"Value for '{key}' in item '{node_id}' not a list or dict, "
+                    f"but {type(entities).__name__}, skipping"
                 )
                 continue
 
