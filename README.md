@@ -375,6 +375,19 @@ See the [`examples/`](https://github.com/timofruehwirth/affiliation-builder/tree
 - `example.json` - Sample JSON data structure
 - `example.ipynb` - Complete Jupyter Notebook with test analysis and visualization
 
+## Changelog
+
+### v0.2.0
+
+- Added support for single entities as JSON objects: input data no longer requires entities to be wrapped in a list when there is only one item
+
+### v0.1.0
+
+- Initial release
+- Core functionality for building bipartite affiliation networks from JSON data
+- Support for flexible input formats
+- Comprehensive error handling and logging
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests on [GitHub](https://github.com/timofruehwirth/affiliation-builder).
